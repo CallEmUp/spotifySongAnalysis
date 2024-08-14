@@ -1,16 +1,16 @@
-# Capstone Project (Spotify)
+# Spotify Song Analysis
 
 In this project, I aimed to analyze 52,000 songs from Spotify in order to gain a better understanding of what factors make music popular, as well as the audio features that make up specific genres of music. The dataset, consisting of data on 52,000 songs, was first loaded into a Pandas DataFrame. Initial inspection was conducted to understand the structure and completeness of the data. Following the loading and preparation of the data, missing values were checked and rows containing any missing values in the key features were removed to ensure the robustness of the statistical tests performed throughout the project. In this instance, there were no NaN values so all data was able to be used in the project. To ensure reproducibility of the results, I seeded the number 18098787 in a random number generator as a unique identifier. Throughout the project, I aimed to answer the following 11 questions: 
 
-1) Consider the 10 song features duration, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valenceand tempo. Is any of these features reasonably distributed normally?
+1) Consider the 10 song features duration, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valenceand tempo. Are any of these features reasonably distributed normally?
 2) Is there a relationship between song length and popularity of a song?
 3) Are explicitly rated songs more popular than songs that are not explicit?
 4) Are songs in major key more popular than songs in minor key?
-5) Energy is believed to largely reflect the “loudness” of a song. Can you substantiate that?
+5) Energy is believed to largely reflect the “loudness” of a song. Can I substantiate that?
 6) Which of the 10 individual (single) song features from question 1 predicts popularity best?
 7) Building a model that uses *all* of the song features from question 1, how well can it predict popularity now?
 8) When considering the 10 song features above, how many meaningful principal components can be extracted?
-9) Can you predict whether a song is in major or minor key from valence?
+9) Can I predict whether a song is in major or minor key from valence?
 10) Which is a better predictor of whether a song is classical music –duration or the principal components extracted in question 8?
 11) What is something interesting about this dataset that is not trivial and not already part of an answer (implied or explicitly) to the previous questions?
 
@@ -63,7 +63,7 @@ Column 20: track_genre–genre assigned by spotify, e.g. “blues” or “class
 
 
 ## Question 1: 
-Consider the 10 song features duration, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, and tempo. Is any of these features reasonably distributed normally? If so, which one?
+Consider the 10 song features duration, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, and tempo. Are any of these features reasonably distributed normally?
 
 In this question, I attempted to identify which of the ten song features—duration, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, and tempo—follow a normal distribution. The use of the identification of normally distributed features is important for subsequent statistical analyses that assume normality, such as parametric tests, which may be used later within the project. I employed a plot of the distributions to help with understanding the data and to see the distributions clearly. The results were as follows:
 
@@ -72,7 +72,7 @@ Based on visual inspection, none of the features shows a clear normal distributi
 The results from the Shapiro-Wilk tests for normality show extremely low p-values for all the features. Duration, Loudness, Speechiness, Acousticness, Instrumentalness, and Liveness have p-values that are 0.0, strongly suggesting that these distributions are not normal. Danceability, Energy, Valence, and Tempo although not zero, have p-values that are very close to zero (well below any conventional alpha level such as 0.05), indicating these features are also not normally distributed. Therefore, the results indicate the rejection of the null hypothesis and none of the song features in the dataset are normally distributed.
 
 ## Question 2:
-Is there a relationship between song length and popularity of a song? If so, is the relationship positive or negative?
+Is there a relationship between song length and popularity of a song?
 
 In this question, I attempted to identify if there is a relationship between the duration of a song and its popularity. Understanding this relationship is important for song production and marketing as it might inform decisions if longer or shorter songs tend to be more popular. To explore this relationship, I employed a scatterplot to visually assess the correlation between these two variables. A scatterplot was used as it is one of the most straightforward methods to visualize potential correlations or trends between two quantitative variables. To aid alongside the visual analysis, a statistical test was performed to quantify the strength and direction of the relationship between song duration and popularity. Pearson’s correlation coefficient was calculated as it measures the linear correlation between two variables, providing both the strength and direction of the relationship.
 
@@ -97,14 +97,14 @@ Alternative - There is a statistically significant difference in popularity base
 Following the result of the two-tailed test, it became clear that there was not a statistically significant difference between popularity based key mode, as displayed by the p value of 0.127. Therefore, due to the p value being >0.05, we fail to reject the null hypothesis and major key songs are not significantly more popular than minor key songs.
 
 ## Question 5:
-Energy is believed to largely reflect the “loudness” of a song. Can you substantiate (or refute) that this is the case?
+Energy is believed to largely reflect the “loudness” of a song. Can I substantiate that?
 
 For this analysis, which investigates whether the energy of a song reflects its loudness, I performed a scatterplot to visually examine the relationship between energy and loudness, and calculated the Pearson correlation coefficient to quantify the relationship. The scatterplot allowed visualization of the relationship between energy and loudness to see if there is a linear trend or any pattern. The Pearson correlation coefficient helped in hand with the scatterplot to determine how strongly the energy and loudness metrics are correlated. The results are as follows:
 
 Based on the plot, the scatterplot shows a clear positive relationship between energy and loudness of songs. As the energy increases, the loudness also tends to increase. The plot displays a dense clustering of points, particularly towards higher levels of energy and loudness, suggesting a strong linear trend in these regions. This analysis is backed with the correlation coefficient of 0.775, which further indicates the strong positive linear relationship between the two variables. Based on the data provided, energy levels largely reflect the loudness of a song.
 
 ## Question 6:
-Which of the 10 individual (single) song features from question 1 predicts popularity best? How good is this “best” model?
+Which of the 10 individual (single) song features from question 1 predicts popularity best?
 
 For this analysis, where the task was to determine which of the 10 song features from question 1 predicts popularity the best, I employed a regression analysis. I used linear regression analysis for each of the 10 features to receive R^2 values. From the R^2 values, I compared each feature's ability to predict the popularity of a song and identify which feature serves as the best predictor. Understanding the feature that most influences song popularity can guide artists and producers in optimizing song characteristics to enhance their appeal. However, before the linear regression analysis took place, I removed the outliers within the features based on the basis that an outlier is a value that resides outside the parameters of below Q1 - 1.5IQR or above Q3 + 1.5IQR. The results are as follows:
 
@@ -115,7 +115,7 @@ The red line in each plot represents the predicted popularity based on the Rando
 The Random Forest Regressor excelled in comparison to the linear regression previously used. The random forest regressor yielded R^2 scores ranging from 0.05 to 0.64. The 'best' model was duration, as duration explains 64% of the variance in popularity. Closely following duration was tempo, yielding a score of .61. These R^2 scores show that the random forest regressor model is a fairly good fit for the data.
 
 ## Question 7:
-Building a model that uses *all* of the song features from question 1, how well can you predict popularity now? How much (if at all) is this model improved compared to the best model in question 6)? How do you account for this?
+Building a model that uses *all* of the song features from question 1, how well can it predict popularity now?
 
 Building on the findings from Question 6, this analysis tests the hypothesis that a combination of features might explain more variability in popularity due to potential synergistic effects. Multiple linear regression was used to model the interactions. The results are as follows:
 
@@ -124,7 +124,7 @@ The red line in the visual represents a perfect predictor. The use of the multip
 The Random Forest model with combined features demonstrates an R² score of 0.4060, which, while showing an improvement over linear regression models by capturing more complex interactions, is still approximately 0.24 points lower than the R² scores achieved by the best-performing individual features, such as duration (R² = 0.6442) and tempo (R² = 0.6059), from the previous analysis in question 6. This relative underperformance of the combined model can be accounted for by its ability to incorporate multiple features simultaneously, therefore adding complexity by integrating various song aspects and their interactions. The model provides a wider understanding of song popularity, even though it does not reach the high predictive power of the best single-feature models. The combination of features can potentially dilute the impact of any single strong predictor by averaging out its effects with less predictive features, therefore resulting in a lower overall R² score than models using only the most predictive features.
 
 ## Question 8:
-When considering the 10 song features above, how many meaningful principal components can you extract? What proportion of the variance do these principal components account for?
+When considering the 10 song features above, how many meaningful principal components can be extracted?
 
 For this analysis, I aimed to explore the effectiveness of Principal Component Analysis (PCA) in reducing the dimensionality of the dataset consisting of ten song features—duration, danceability, energy, loudness, speechiness, acousticness, instrumentalness, liveness, valence, and tempo. The goal was to determine how many meaningful principal components can be extracted and what proportion of the variance these components account for. PCA is a powerful tool for dimensionality reduction, used to simplify the data while retaining as much information as possible. It transforms the original variables into a new set of variables, which are orthogonal (uncorrelated) and ranked according to the variance they capture from the data. I performed PCA to extract the principal components and then looked into the proportion of variance explained by each component. The results are as follows:
 
@@ -145,7 +145,7 @@ From the heat map, the interpretation of the components are:
 This interpretation can help with understanding each component, leading to a more beneficial finding of results.
 
 ## Question 9:
-Can you predict whether a song is in major or minor key from valence? If so, how good is this prediction? If not, is there a better predictor?
+Can I predict whether a song is in major or minor key from valence?
 
 For this analysis, I aimed to determine if song valence (a measure of musical positiveness) can predict whether a song is in a major or minor key. Understanding this relationship can provide insights into how the emotional content of music correlates with musical theory concepts like key modes. In order to do this, I used a logistic regression to model the relationship between valence and key note. The results are as follows:
 
@@ -156,14 +156,14 @@ The model's performance, as captured by the ROC-AUC score, was found to be 0.51,
 As observed from the results, all of the selected features yielded higher ROC-AUC values than valence, thus indicating that they are all better predictors. However, the "best" predictor from the data analysis was the combined feature predictor, with the ROC-AUC of 0.59.
 
 ## Question 10:
-Which is a better predictor of whether a song is classical music – duration or the principal components you extracted in question 8?
+Which is a better predictor of whether a song is classical music – duration or the principal components extracted in question 8?
 
 For this analysis, I aimed to determine if song duration or principal components (extracted from various song features in question 8) can predict whether a song is classified as classical music. Understanding this relationship can provide insights into how different musical characteristics contribute to the classification of music genres, particularly classical music. In order to do this, I used logistic regression models to assess the predictive power of both duration and principal components. The results are as follows:
 
 Based on the analysis, principal components are a significantly better predictor of whether a song is classical music compared to using duration alone. The ROC-AUC score for the principal components model was 0.9564, which is much higher than the 0.5651 for the duration model. The classification report for the principal components model shows a substantial improvement in recall for the classical music class (0.90) compared to the duration model (0.00). Additionally, the principal components model has a much higher precision for the classical music class (0.14) than the duration model (0.00), although it is still quite low. The ROC curve for the principal components model illustrates a far superior performance, with an area under the curve close to 1, indicating excellent discriminative ability. In contrast, the ROC curve for the duration model is much closer to the diagonal line, indicating performance close to random guessing. These results suggest that the combination of various song features captured by principal components provides a more comprehensive understanding and significantly better predictive power for classifying classical music compared to using duration alone.
 
-## Extra Credit:
-Tell us something interesting about this dataset that is not trivial and not already part of an answer (implied or explicitly) to these enumerated questions
+## Question 11:
+What is something interesting about this dataset that is not trivial and not already part of an answer (implied or explicitly) to the previous questions?
 
 For this analysis, I aimed to determine whether there are statistically significant differences in the average tempo of songs between different musical keys. Understanding these differences can provide insights into how key selection might influence the tempo of a composition, which is valuable for both music theory and practical composition. To achieve this, I used an Analysis of Variance (ANOVA) test followed by Tukey's Honestly Significant Difference (HSD) test for post-hoc analysis. ANOVA is useful in this context as it allows us to determine whether there are any statistically significant differences in the means of multiple groups (in this case, the different keys), and Tukey's HSD test helps to identify which specific pairs of keys differ. The results are as follows:
 
